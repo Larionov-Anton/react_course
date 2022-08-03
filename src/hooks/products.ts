@@ -6,12 +6,16 @@ import {Product} from '../components/Product';
 import { IProduct } from '../models';
 
 
-
+// Собственный хук
 export function useProducts() {
 	// Состояние приложения
 	const [products, setProducts] = useState<IProduct[]>([])
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState('')
+
+	function addProduct(product: IProduct) {
+		setProducts(prev => [...prev, product])
+	}
 
 	// Асинхронный запрос на сервер с обработкой ошибок
 	async function fetchProducts() {
@@ -36,5 +40,5 @@ export function useProducts() {
 		fetchProducts()
 	}, [])
 
-	return {products, loading, error}
+	return {products, loading, error, addProduct}
 }
